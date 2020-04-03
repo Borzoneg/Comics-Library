@@ -14,7 +14,7 @@
   specific indicator to indicate that is a arrers list;
 - the user export his arrears list to send it to his comic book store.
 
-##Classes:
+## Classes:
 - **Library**  
 	Main class, contains both comics and series
 - **Comic**  
@@ -24,7 +24,7 @@
 - **Serie**  
 	Contains the info about a single serie: the list of comic in that serie, sorted
 
-##Tested function:
+## Tested function:
 
 - Library library = new Library("My library");	
 - Comic.fromStr2Comic(input0, library); *(input0 is a serie comic)*
