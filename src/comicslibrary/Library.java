@@ -1,5 +1,11 @@
 		package comicslibrary;
 
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +24,16 @@ public class Library {
 
 	
 	public Library(String name, String filename) {
-		System.out.println("Not implemented yet");
+		this.name = name;
+		try(BufferedReader br = Files.newBufferedReader(Paths.get(filename))){
+			String line;
+			while((line = br.readLine()) != null)
+				this.addComic(Comic.fromStr2Comic(line, this));
+		}
+		catch (IOException e) {
+            System.err.format("IOException: %s\n", e);
+            System.out.println(filename);
+        }
 	}
 
 	
@@ -110,5 +125,18 @@ public class Library {
 		for(i=0; i<comicsName.length; i++) {
 			removeComicByName(comicsName[i]);
 		}
+	}
+	
+	
+	public void saveLibrary(String filename) {
+	Writer dest;
+	try {
+		dest = new FileWriter(filename);
+		dest.write(this.comicsToString());
+		dest.close();
+	} catch (IOException e) {
+		System.err.println("Error occured with file");
+	}
+	
 	}
 }

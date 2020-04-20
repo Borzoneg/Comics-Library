@@ -6,10 +6,10 @@
 - *the user keeps adding comics one to one;*
 - *the user adds a bunch of comics part of the same series (e.g: Aldo adds Spider-Man from 12 to 123);*
 - *the user can deletes a comic he's sold or given away deleting it from the library;*
-- the user saves a file of his library naming it;
-- the user closes the application and make himself a sandwich;
-- the user comes back and open the app again;
-- the user inserts the library name and the app load all the data;
+- *the user saves a file of his library naming it;*
+- *the user closes the application and make himself a sandwich;*
+- *the user comes back and open the app again;*
+- *the user inserts the library name and the app load all the data;*
 
 ## Classes:
 - **Library**  
@@ -41,3 +41,5 @@
 - library.removeComicByName("Bone");
 - serie.removeComic("Bone");
 - library.removeComicsByName(toRemove); *toRemove is an array of string*
+- Library library2 = new Library("My second library", "Files/personal_library.txt");
+- library.saveLibrary("prova.txt");

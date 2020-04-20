@@ -1,0 +1,6 @@
+Spiderman 703 3.50
+Bone 35
+Spiderman 704 3.50
+Batman 121 4.00
+Batman 122 4.00
+Batman 123 4.00

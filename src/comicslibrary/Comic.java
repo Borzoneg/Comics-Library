@@ -25,7 +25,8 @@ public class Comic {
 		// for comic parts of a serie: "Amazing Spiderman 703 3.50"
 		// for graphic novel: "Bone 35	
 
-		// TODO: if instead of bone 35 is inserted 35.00 doesn't match and raise an error 
+		// TODO: if instead of bone 35 is inserted 35.00 doesn't match and raise an error
+		
 		Matcher m = pattern.matcher(formattedString);
 		m.matches();
 		
@@ -33,7 +34,7 @@ public class Comic {
 			 return new Comic(m.group(1), Float.parseFloat(m.group(2)), library);
 		}
 		else{
-			String name = m.group(1) + " #" + m.group(2);
+			String name = m.group(1) + " " + m.group(2);
 			//Serie serie = new Serie(m.group(1));		
 			int issue = Integer.parseInt(m.group(2));
 			double price = Double.parseDouble(m.group(3));
@@ -58,4 +59,4 @@ public class Comic {
 	public double getPrice() {
 		return price;
 	}
-}
+}	
