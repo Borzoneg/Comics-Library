@@ -35,7 +35,6 @@ public class Comic {
 		}
 		else{
 			String name = m.group(1) + " " + m.group(2);
-			//Serie serie = new Serie(m.group(1));		
 			int issue = Integer.parseInt(m.group(2));
 			double price = Double.parseDouble(m.group(3));
 			Serie s = library.getOrCreateSerie(m.group(1));
