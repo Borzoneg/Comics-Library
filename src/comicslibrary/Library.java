@@ -1,4 +1,4 @@
-		package comicslibrary;
+package comicslibrary;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -9,12 +9,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.ComicException;
+
 public class Library {
 
 	private String name;
 	private int nComics;
 	private List<Comic> comics = new ArrayList<Comic>();
-	private float totalExpanse;
+	private double totalExpanse;
 	private List<Serie> series = new ArrayList<Serie>();
 
 	
@@ -27,13 +29,16 @@ public class Library {
 		this.name = name;
 		try(BufferedReader br = Files.newBufferedReader(Paths.get(filename))){
 			String line;
-			while((line = br.readLine()) != null)
-				this.addComic(Comic.fromStr2Comic(line, this));
+			while((line = br.readLine()) != null) {
+			    String [] fields = Comic.getFieldsFromStr(line);
+			    Comic c = fields.length==2 ? new Comic(fields, this) : new SerieComic(fields, this);
+			    this.addComic(c);
+			}
 		}
 		catch (IOException e) {
             System.err.format("IOException: %s\n", e);
             System.out.println(filename);
-        }
+		}
 	}
 
 	
@@ -64,7 +69,7 @@ public class Library {
 	}
 
 	
-	public float getTotalExpanse() {
+	public double getTotalExpanse() {
 		return totalExpanse;
 	}
 	
@@ -132,11 +137,41 @@ public class Library {
 	Writer dest;
 	try {
 		dest = new FileWriter(filename);
-		dest.write(this.comicsToString());
+		dest.write(this.comicsToStringForFile());
 		dest.close();
 	} catch (IOException e) {
 		System.err.println("Error occured with file");
 	}
 	
+	}
+
+
+	private String comicsToStringForFile() {
+	    StringBuffer buf  = new StringBuffer();
+		for(Comic c : comics) { 
+			if(c == null)
+				break;
+			if(c instanceof SerieComic)
+			    buf.append(((SerieComic)c).toStringForFile());
+			else
+			    buf.append(c.toStringForFile());
+			buf.append('\n');
+		}
+		return buf.toString();
+	}
+
+
+	public void addComics(SerieComic[] comics) {
+	    for(SerieComic c : comics)
+		this.addComic(c);
+	}
+	
+	
+	public void addSerieComics(int [] nums, float price, String serie) {
+		for(int n : nums) {
+			String name = serie + " " + String.valueOf(n);
+			SerieComic comic = new SerieComic(name, n, price, this, serie);
+			this.addComic(comic);
+		}
 	}
 }

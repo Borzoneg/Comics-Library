@@ -1,82 +1,79 @@
 package main;
 
-import java.util.Scanner;
-
+	
 import comicslibrary.*;
-import exceptions.MenuException;
 
 public class Application {
 
 	public static void main(String[] args) {
+	    
 		int choice;
+		Integer[] issues;
 		Menu menu = new Menu();
-		Comic comic;
-		Library library;
-		String sTmp1, sTmp2;
-		Scanner keyboard = new Scanner (System.in);
+		Library library = null;
+		String sTmp1, sTmp2, multipleSTmp[];
+		Comic tmpComic;
 		
-		choice = menu.welcomeGreet();
+		
+		System.out.println("Welcome in comics library!");
+		choice = menu.libraryMenu();
 		while(choice != 0 && choice != 1) 
-		    choice = menu.welcomeGreet();
+		    choice = menu.libraryMenu();
 		
-		if(choice == 0) { // new library case
-		    System.out.println("Insert name of the library");
-		    sTmp1 = keyboard.nextLine();
+		if(choice == 0) { // new library case		 
+		    sTmp1 = menu.newLibrary();
 		    library = new Library(sTmp1);
 		}
 		
 		if(choice == 1) { // new library case from file
-		    System.out.println("Insert name of the library");
-		    sTmp1 = keyboard.nextLine();
-		    System.out.println("Insert the name of the file");
-		    sTmp2 = keyboard.nextLine();
-		    library = new Library(sTmp1, sTmp2);
+		    multipleSTmp = menu.loadLibraryFromFile();
+		    if(multipleSTmp[1].length() > 0)
+			library = new Library(multipleSTmp[0], multipleSTmp[1]);
 		}
 		
-		while((choice = menu.mainMenu()) != 7) {
-		    if(choice < 0 || choice > 7)
+		while((choice = menu.mainMenu()) != 6) { // main menu loop
+		    if(choice < 0 || choice > 6)
 			continue;
 		    switch(choice) {
-		    case 0:
-			System.out.println("Every library you are working on will be lost, are u sure u want to continue?");
-			sTmp1 = keyboard.nextLine();
-			if(sTmp1.equals("n"))
-			    continue;
-			System.out.println("Insert name of the library");
-			sTmp1 = keyboard.nextLine();
-			library = new Library(sTmp1);
+		    case 0: // new library case
+			if(menu.overwriteAlert()) {
+			    sTmp1 = menu.newLibrary();
+			    library = new Library(sTmp1);
+			}
 			break;
 		    
-		    case 1:
-			System.out.println("Every library you are working on will be lost, are u sure u want to continue?");
-			sTmp1 = keyboard.nextLine();
-			if(sTmp1.equals("n"))
-			    continue;
-			System.out.println("Insert name of the library");
-			sTmp1 = keyboard.nextLine();
-			System.out.println("Insert the name of the file");
-			sTmp2 = keyboard.nextLine();
-			library = new Library(sTmp1, sTmp2);
+		    case 1: // new library from file case
+			if(menu.overwriteAlert()) {			
+			    multipleSTmp = menu.loadLibraryFromFile();
+			    if(multipleSTmp[1].length() > 0)
+				library = new Library(multipleSTmp[0], multipleSTmp[1]);
+			}
 			break;
 			
-		    case 2:
-			sTmp1 = menu.getInfoOfComic();
+		    case 2: // add a comic
+			multipleSTmp = menu.newComicGetFields();
+			tmpComic = multipleSTmp.length==2 ? new Comic(multipleSTmp, library) : new SerieComic(multipleSTmp, library);
+			library.addComic(tmpComic);
 			break;
 			
-		    case 3:
+		    case 3: // remove a comic or comics
+			multipleSTmp = menu.removeComics();
+			library.removeComicsByName(multipleSTmp);		
 			break;
 			
-		    case 4:
+		    case 4: // Add multiple comics of a serie
+			issues = menu.addSerieComics();
+			// TODO: how to get name of serie and price from menu class?
+			//library.addSerieComics(issues, price, serie);
 			break;
 			
-		    case 5:
+		    case 5: // Save library
 			break;
 			
-		    case 6:
-			break;
+		    default:
+			System.out.println("Inserted code not valid, try again");
 		
 		    }
 		}
-		
 	}
 }

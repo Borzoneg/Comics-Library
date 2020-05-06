@@ -1,25 +1,44 @@
 package comicslibrary;
 
+import java.util.Locale;
+
 public class SerieComic extends Comic {
 
 	private Serie serie;
 	private int issue;
-	//private Date date;
+
 	
-	public SerieComic(String name, int issue, double price, Library library, Serie serie){
-		this.name = name;
+	public SerieComic(String name, int issue, double price, Library library, String strSerie){
+		super(name, price, library);
 		this.issue = issue;
-		this.price = price;
-		//this.date = date;
-		this.library = library;
+		Serie serie = library.getOrCreateSerie(strSerie);
+		serie.addComic(this);
 		this.serie = serie;
 	}
+
+
+	public SerieComic(String[] fields, Library library) {
+	    super();
+	    name = fields[0] + " " + fields[1];
+	    issue = Integer.valueOf(fields[1]);
+	    price = Double.valueOf(fields[2]);
+	    Serie serie = library.getOrCreateSerie(fields[0]);
+	    serie.addComic(this);
+	    this.serie = serie;
+	}
+
 	
 	public int getIssue() {
 		return issue;
 	}
 	
+	
 	public Serie getSerie() {
 		return serie;
+	}
+	
+	
+	public String toStringForFile() {
+	    return String.format(Locale.US, "%s  %d  %.2f" , serie.getName(), issue, price);
 	}
 }

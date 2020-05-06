@@ -43,7 +43,7 @@ public class Serie {
 	public void addComics(int [] nums, float price, Library library) {
 		for(int n : nums) {
 			String name = this.name + " " + String.valueOf(n);
-			SerieComic comic = new SerieComic(name, n, price, library, this);
+			SerieComic comic = new SerieComic(name, n, price, library, this.name);
 			library.addComic(comic);
 			 this.addComic(comic);
 		}
