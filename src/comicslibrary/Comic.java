@@ -41,7 +41,7 @@ public class Comic {
 	
 	
 	public String toString() {
-		return String.format("%-20s  %4.2f â‚¬" , name, price);
+		return String.format("%-40s  %4.2f €" , name, price);
 	}
 
 

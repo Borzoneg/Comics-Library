@@ -1,5 +1,6 @@
 package main;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,13 +9,16 @@ import exceptions.MenuException;
 public class Menu {
 
 	Scanner keyboard = new Scanner(System.in, "UTF-8");
+	String tmp;
+	int i, choice;
+	String nameOrSerie, price, issue;
+	String sTmp[] = new String[2];
 	
 	public Menu() {
 	}
-	
-	
+
+
 	public int libraryMenu(){
-		int i, choice;
 		String[] choices = {"Create a new library", "Load a library from a file"};
 		for(i=0; i<choices.length; i++) {
 			System.out.println(String.valueOf(i) + ". " + choices[i] + '\n');
@@ -22,12 +26,11 @@ public class Menu {
 		choice = Integer.valueOf(keyboard.nextLine());
 		return choice;
 	}
-	
-	
+
+
 	public int mainMenu() {
-		int i, choice;
 		String[] choices = {"Create a new library", "Load a library from a file", "Add a comic", "Remove a comic",
-							"Add multiple comics of a serie", "Save library", "Exit"};
+				"Add multiple comics of a serie", "Save library", "Print comics", "Print library info", "Print library's series", "Exit"};
 		for(i=0; i<choices.length; i++) {
 			System.out.println(String.valueOf(i) + ". " + choices[i] + '\n');
 		}
@@ -37,30 +40,25 @@ public class Menu {
 
 
 	public String[] newComicGetFields() {
-	    String nameOrSerie, price, issue;
-	    System.out.println("Insert the name(name of the serie if is part of a serie):");
-	    nameOrSerie = keyboard.nextLine();
-	    System.out.println("Insert the issue(if part of a serie)");
-	    issue = keyboard.nextLine();
-	    System.out.println("Insert the price");
-	    price = keyboard.nextLine();	
-	    if(issue.length() == 0) 
-		return new String[]{nameOrSerie, price};
-	    return new String[]{nameOrSerie, issue, price};
+		System.out.println("Insert the name(name of the serie if is part of a serie):");
+		nameOrSerie = keyboard.nextLine();
+		System.out.println("Insert the issue(if part of a serie)");
+		issue = keyboard.nextLine();
+		System.out.println("Insert the price");
+		price = keyboard.nextLine();	
+		if(issue.length() == 0) 
+			return new String[]{nameOrSerie, price};
+		return new String[]{nameOrSerie, issue, price};
 	}
-	
-	
-	public String[] loadLibraryFromFile() {
-	    String sTmp[] = new String[2];
-	    System.out.println("Every library you are working on will be lost, are u sure u want to continue?");
-		sTmp[0] = keyboard.nextLine();
-		if(sTmp[0].equals("n"))
-		    return null;
-		System.out.println("Insert name of the library");
-		sTmp[0] = keyboard.nextLine();
+
+
+	public String loadLibraryFromFile() {
+		System.out.println("Every library you are working on will be lost, are u sure u want to continue?");
+		if(keyboard.nextLine().equals("n"))
+			return null;
 		System.out.println("Insert the name of the file");
-		sTmp[1] = keyboard.nextLine();
-		return sTmp;	
+		tmp = keyboard.nextLine();
+		return tmp;	
 	}
 
 
@@ -71,39 +69,53 @@ public class Menu {
 	}
 
 
-	public String[] removeComics() {
-	    String sTmp;
-	    ArrayList <String> listOfComics = new ArrayList<String>();
-	    System.out.println("Insert the name of the comic you want to delete (press enter if have finished)");
-	    while((sTmp = keyboard.nextLine()).length() > 0) {
-		listOfComics.add(sTmp);
+	public List<String> removeComics() {
+		ArrayList <String> listOfComics = new ArrayList<String>();
 		System.out.println("Insert the name of the comic you want to delete (press enter if have finished)");
-	    }
-	    return (String[])listOfComics.toArray();
+		while((tmp = keyboard.nextLine()).length() > 0) {
+			listOfComics.add(tmp);
+			System.out.println("Insert the name of the comic you want to delete (press enter if have finished)");
+		}
+		return listOfComics;
 	}
-	
-	
-	public Integer[] addSerieComics() {
-	    String tmp;
-	    ArrayList <Integer> issues = new ArrayList <Integer>();
-	    System.out.println("Insert the issue of the comic");
-	    tmp = keyboard.nextLine();
-	    while(tmp.length()>0) {
-		issues.add(Integer.valueOf(tmp));
+
+
+	public List<String> addSerieComics() {
+		ArrayList <String> issues = new ArrayList <>();
+		System.out.println("Insert the name of the serie");
+		issues.add(keyboard.nextLine());
+		System.out.println("Insert the price of the single issue");
+		issues.add(keyboard.nextLine());
 		System.out.println("Insert the issue of the comic");
 		tmp = keyboard.nextLine();
-	    }
-	    return ((Integer[])issues.toArray());
+		while(tmp.length()>0) {
+			issues.add(tmp);
+			System.out.println("Insert the issue of the comic");
+			tmp = keyboard.nextLine();
+		}
+		return issues;
 	}
 
 
 	public boolean overwriteAlert() {
-	    System.out.println("Every library you are working on will be lost, are u sure u want to continue?");
-	    String sTmp = keyboard.nextLine();
-	    if(sTmp.equals("n"))
-		return false;
-	    return true;
-	    
+		System.out.println("Every library you are working on will be lost, are u sure u want to continue?");
+		if(keyboard.nextLine().equals("n"))
+			return false;
+		return true;
+	}
+
+
+	public String filenameSave() {
+		System.out.println("What's the name of your library?");
+		return keyboard.nextLine();
+	}
+
+
+	public boolean addComicLoop() {
+		System.out.println("Do you want to insert a new comic?");
+		if(keyboard.nextLine().equals("n"))
+			return false;
+		return true;
 	}
 
 }

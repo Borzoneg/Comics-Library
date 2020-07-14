@@ -27,6 +27,7 @@ public class Library {
 	
 	public Library(String name, String filename) {
 		this.name = name;
+		filename = "Files/" + filename + ".txt";
 		try(BufferedReader br = Files.newBufferedReader(Paths.get(filename))){
 			String line;
 			while((line = br.readLine()) != null) {
@@ -55,7 +56,7 @@ public class Library {
 
 	
 	public String getInfoString() {
-		return String.format("%s contiene %d fumetti! Per una spesa totale di %.2f â‚¬", name, nComics, totalExpanse);
+		return String.format("%s contiene %d fumetti! Per una spesa totale di %.2f €", name, nComics, totalExpanse);
 	}
 	
 	
@@ -78,6 +79,7 @@ public class Library {
 		comics.add(comic);
 		++nComics;
 		totalExpanse += comic.price;
+		comics.sort((c1, c2) -> c1.getName().compareTo(c2.getName()));
 	}
 	
 
@@ -125,16 +127,15 @@ public class Library {
 	}
 
 	
-	public void removeComicsByName(String [] comicsName) {
-		int i;
-		for(i=0; i<comicsName.length; i++) {
-			removeComicByName(comicsName[i]);
-		}
+	public void removeComicsByName(List<String> comicsName) {
+		for(String s : comicsName) 
+			removeComicByName(s);
 	}
 	
 	
 	public void saveLibrary(String filename) {
 	Writer dest;
+	filename = "Files/" + filename + ".txt"; 
 	try {
 		dest = new FileWriter(filename);
 		dest.write(this.comicsToStringForFile());
@@ -167,8 +168,8 @@ public class Library {
 	}
 	
 	
-	public void addSerieComics(int [] nums, float price, String serie) {
-		for(int n : nums) {
+	public void addSerieComics(List<Integer> nums, float price, String serie) {
+		for(Integer n : nums) {
 			String name = serie + " " + String.valueOf(n);
 			SerieComic comic = new SerieComic(name, n, price, this, serie);
 			this.addComic(comic);
