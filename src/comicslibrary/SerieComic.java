@@ -28,7 +28,7 @@ public class SerieComic extends Comic {
 	}
 
 	
-	public int getIssue() {
+	public Integer getIssue() {
 		return issue;
 	}
 	

@@ -2,7 +2,6 @@ package main;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 import comicslibrary.*;
@@ -15,7 +14,7 @@ public class Application {
 		List <String> tmpStrList = new ArrayList<>();
 		Menu menu = new Menu();
 		Library library = null;
-		String sTmp1, sTmp2, multipleSTmp[];
+		String sTmp1, multipleSTmp[];
 		Comic tmpComic;
 		boolean loop, exit = false;
 

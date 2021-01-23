@@ -9,8 +9,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.ComicException;
-
 public class Library {
 
 	private String name;
@@ -79,7 +77,8 @@ public class Library {
 		comics.add(comic);
 		++nComics;
 		totalExpanse += comic.price;
-		comics.sort((c1, c2) -> c1.getName().compareTo(c2.getName()));
+		comics.sort((c1, c2) -> c1 instanceof SerieComic && c2 instanceof SerieComic && ((SerieComic)c1).getSerie().equals(((SerieComic)c2).getSerie()) ? 
+				((SerieComic)c1).getIssue().compareTo(((SerieComic)c2).getIssue()) : c1.getName().compareTo(c2.getName()));
 	}
 	
 

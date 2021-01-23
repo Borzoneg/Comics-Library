@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import exceptions.MenuException;
-
 public class Menu {
 
 	Scanner keyboard = new Scanner(System.in, "UTF-8");
@@ -81,18 +79,18 @@ public class Menu {
 
 
 	public List<String> addSerieComics() {
+		int start, end, i;
 		ArrayList <String> issues = new ArrayList <>();
 		System.out.println("Insert the name of the serie");
 		issues.add(keyboard.nextLine());
 		System.out.println("Insert the price of the single issue");
 		issues.add(keyboard.nextLine());
-		System.out.println("Insert the issue of the comic");
-		tmp = keyboard.nextLine();
-		while(tmp.length()>0) {
-			issues.add(tmp);
-			System.out.println("Insert the issue of the comic");
-			tmp = keyboard.nextLine();
-		}
+		System.out.println("Insert the starting point");
+		start = Integer.valueOf(keyboard.nextLine());
+		System.out.println("Insert the ending point");
+		end = Integer.valueOf(keyboard.nextLine());
+		for(i=start; i <= end; i++)
+			issues.add(String.valueOf(i));
 		return issues;
 	}
 

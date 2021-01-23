@@ -2,6 +2,9 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import comicslibrary.Comic;
@@ -75,7 +78,12 @@ class MainTest {
 	assertEquals(7, library.getOrCreateSerie("Amazing Spiderman").getNComics());
 	
 	// multiple removes test
-	String[] toRemove = {"I kill giants", "Amazing Spiderman 123", "Amazing Spiderman 124", "Amazing Spiderman 125", "Amazing Spiderman 126"};
+	List<String> toRemove = new ArrayList<>();
+	toRemove.add("Amazing Spiderman 126");
+	toRemove.add("I kill giants");
+	toRemove.add("Amazing Spiderman 123");
+	toRemove.add("Amazing Spiderman 124");
+	toRemove.add("Amazing Spiderman 125"); 
 	library.removeComicsByName(toRemove);
 	assertTrue(library.getInfoString().contains("3"));
 

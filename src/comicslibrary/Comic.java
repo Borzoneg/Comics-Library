@@ -2,8 +2,6 @@ package comicslibrary;
 
 import java.util.Locale;
 
-import exceptions.ComicException;
-
 public class Comic {
 
 	protected String name;
@@ -41,7 +39,7 @@ public class Comic {
 	
 	
 	public String toString() {
-		return String.format("%-40s  %4.2f €" , name, price);
+		return String.format("%-60s  %4.2f €" , name, price);
 	}
 
 
